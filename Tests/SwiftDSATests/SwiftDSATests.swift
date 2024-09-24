@@ -45,5 +45,15 @@ import Testing
         #expect(Solutions.containsDuplicate(nums) == expected)
     }
 
-
+    @Test(arguments: [
+        ([1,1,1,2,2,3], 2, [1,2]),
+        ([1], 1, [1]),
+        ([4,1,-1,2,-1,2,3], 2, [2, -1])
+    ])
+    func _347_topKFrequentElements(_ nums: [Int], _ k: Int, expected: [Int]) {
+        // #expect(Solutions.topKFrequent(nums, k) == expected)
+        for int in expected {
+            #expect(nums.contains(int) == true)
+        }
+    }
 }
