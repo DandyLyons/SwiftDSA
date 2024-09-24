@@ -27,6 +27,16 @@ import Testing
     }
 
     @Test(arguments: [
+        (["2","1","+","3","*"], 9), 
+        (["4","13","5","/","+"], 6),
+        (["10","6","9","3","+","-11","*","/","*","17","+","5","+"], 22)
+    ])
+    func _150_evalRPN(_ strings: [String], expected: Int) {
+        #expect(Solutions.evalRPN(strings) == expected)
+    }
+
+
+    @Test(arguments: [
         ([1,2,3,1], true),
         ([1,1,1,3,3,4,3,2,4,2], true),
         ([1,2,3,4], false),
@@ -34,5 +44,6 @@ import Testing
     func _217_containsDuplicate(nums: [Int], expected: Bool) async throws {
         #expect(Solutions.containsDuplicate(nums) == expected)
     }
+
 
 }
