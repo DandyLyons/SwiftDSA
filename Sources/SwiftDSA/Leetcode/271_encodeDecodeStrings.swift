@@ -25,14 +25,6 @@ extension Solutions {
         var currentString = "" // the string that we're currently building to append to result
 
         for char in string {
-            print("char", char)
-            print("currentString", currentString)
-            print("parsingStep", parsingStep)
-            print("intString", intString)
-            print("currentString", currentString)
-            print("lettersLeftToParseInStringElement", lettersLeftToParseInStringElement)
-            print("result", result)
-            print("____")
             switch parsingStep {
                 case .int: 
                     guard char != delimiter else { 
@@ -64,7 +56,6 @@ extension Solutions {
                     }
             }
         }
-        print("decoded result" , result)
         return result
     }
 }

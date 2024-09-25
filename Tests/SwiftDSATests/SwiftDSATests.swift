@@ -26,7 +26,9 @@ import Testing
         #expect(groups.count == expected.count)
     }
     
-    @Test(arguments: [("racecar", true), ("palindrome", false)])
+    @Test(arguments: [("racecar", true), ("palindrome", false),
+                     ("A man, a plan, a canal: Panama", true),
+                     ("`l;`` 1o1 ??;l`", true)])
     func _125_isPalindrome(string: String, expected: Bool) {
         #expect(Solutions._125_isPalindrome(string) == expected)
     }
