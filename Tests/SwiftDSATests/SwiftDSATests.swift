@@ -17,6 +17,17 @@ import Testing
     func _20_validParentheses(s: String, expected: Bool) {
         #expect(Solutions._20_validParentheses(s) == expected)
     }
+    
+    @Test(arguments: [
+        (2, ["()()", "(())"]),
+        (3, ["((()))","(()())","(())()","()(())","()()()"])
+    ])
+    func _22_generateParenthesis(n: Int, expected: [String]) {
+        for string in expected {
+            let contains = Solutions._22_generateParenthesis(n).contains(string)
+            #expect(contains == true)
+        }
+    }
 
     @Test(arguments: [
         (["eat","tea","tan","ate","nat","bat"], [["bat"],["nat","tan"],["ate","eat","tea"]]),
