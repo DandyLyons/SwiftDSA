@@ -10,6 +10,13 @@ import Testing
     func _1_twoSum(nums: [Int], target: Int, expected: [Int]) async throws {
         #expect(Solutions.twoSum_bruteForce(nums, target) == expected)
     }
+    
+    @Test(arguments: [
+        ("()", true), ("()[]{}", true), ("(]", false), ("([])", true)
+    ])
+    func _20_validParentheses(s: String, expected: Bool) {
+        #expect(Solutions._20_validParentheses(s) == expected)
+    }
 
     @Test(arguments: [
         (["eat","tea","tan","ate","nat","bat"], [["bat"],["nat","tan"],["ate","eat","tea"]]),
