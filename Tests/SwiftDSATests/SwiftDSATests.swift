@@ -25,6 +25,11 @@ import Testing
         }
         #expect(groups.count == expected.count)
     }
+    
+    @Test(arguments: [("racecar", true), ("palindrome", false)])
+    func _125_isPalindrome(string: String, expected: Bool) {
+        #expect(Solutions._125_isPalindrome(string) == expected)
+    }
 
     @Test(arguments: [
         (["2","1","+","3","*"], 9), 
@@ -43,6 +48,20 @@ import Testing
     ])
     func _217_containsDuplicate(nums: [Int], expected: Bool) async throws {
         #expect(Solutions.containsDuplicate(nums) == expected)
+    }
+
+    @Test(arguments: [
+        ["neet","code","love","you"],
+        ["we","say",":","yes"],
+        ["$", "%", "^"], 
+        ["1", "02", "003", "0004", "00005"],
+        ["a", "a", "a", "a"],
+        ["1%", "2%", "3%", "4%"]
+    ])
+    func _271_encodeDecode(input: [String]) {
+        let encoded = Solutions._271_encode(input)
+        let decoded = Solutions._271_decode(encoded)
+        #expect(input == decoded)
     }
 
     @Test(arguments: [

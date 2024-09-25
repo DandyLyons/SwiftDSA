@@ -4,6 +4,9 @@ extension Solutions {
     /// https://leetcode.com/problems/top-k-frequent-elements/
     /// 
     /// Time Complexity: O(N log N)
+    /// 
+    /// Leetcode: https://leetcode.com/problems/top-k-frequent-elements/
+    /// Neetcode: https://neetcode.io/problems/top-k-elements-in-list 
     static func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
         var count = [Int: Int]()
         for num in nums {
