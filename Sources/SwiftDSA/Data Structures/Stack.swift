@@ -3,8 +3,14 @@
 ///
 /// Stack guarantees that elements are kept in order.
 public struct Stack<Element> {
+    
     public init(_ array: [Element]) {
         self.array = array
+    }
+    
+    /// returns an empty stack
+    public init() {
+        self.array = []
     }
     
     private var array: [Element]
