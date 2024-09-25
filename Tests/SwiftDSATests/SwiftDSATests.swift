@@ -49,6 +49,34 @@ import Testing
         #expect(Solutions.evalRPN(strings) == expected)
     }
     
+    enum MinStackActions {
+        case push(Int), pop, top, getMin
+    }
+    
+    @Test
+    func _155_MinStack_1() {
+        let minStack = Solutions.MinStack()
+        minStack.push(-2)
+        minStack.push(0)
+        minStack.push(-3)
+        #expect(minStack.getMin() == -3)
+        minStack.pop()
+        #expect(minStack.top() == 0)
+        #expect(minStack.getMin() == -2)
+    }
+    
+    @Test
+    func _155_MinStack_2() {
+        let minStack = Solutions.MinStack()
+        minStack.push(1)
+        minStack.push(2)
+        #expect(minStack.top() == 2)
+        #expect(minStack.getMin() == 1)
+        minStack.pop()
+        #expect(minStack.getMin() == 1)
+        #expect(minStack.top() == 1)
+    }
+    
     @Test(arguments: [
         ([2, 7, 11, 15], 9, [1, 2]),
         ([2, 3, 4], 6, [1, 3]),
