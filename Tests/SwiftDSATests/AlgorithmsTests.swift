@@ -3,15 +3,17 @@ import SwiftDSA
 
 @Suite
 struct AlgorithmsTests {
-    @Test func countFrequency() async throws {
-        // create an array of random elements and random length
-        let n = Int.random(in: 1...1000)
-        var array = [Int]()
-        for i in 0..<n {
-            array.append(Int.random(in: -100...100))
+    let array = (1...100_000).map { _ in Int.random(in: -100...100) }
+    
+    @Test func countFrequency() throws {
+        let frequency = array.countFrequency()
+        for (element, count) in frequency {
+            #expect(array.count { $0 == element} == count)
         }
-        
-        let frequency = Algorithms.countFrequency(array)
+    }
+    
+    @Test func countFrequency_Parallel() async throws {
+        let frequency = await array.countFrequency()
         for (element, count) in frequency {
             #expect(array.count { $0 == element} == count)
         }
@@ -19,14 +21,16 @@ struct AlgorithmsTests {
     
     @Test
     func haveSameElements() {
-        // create an array of random elements and random length
-        let n = Int.random(in: 1...1000)
-        var array1 = [Int]()
-        for i in 0..<n {
-            array1.append(Int.random(in: -100...100))
-        }
+        let array1 = self.array
+        let array2 = array1.shuffled()
+        #expect(array1.hasSameElements(as: array2) == true)
+    }
+    
+    @Test
+    func haveSameElements_Parallel() async {
+        let array1 = self.array
         
         let array2 = array1.shuffled()
-        #expect(Algorithms.haveSameElements(array1, array2) == true)
+        #expect(await array1.hasSameElements(as: array2) == true)
     }
 }

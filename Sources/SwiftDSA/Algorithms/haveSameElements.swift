@@ -1,13 +1,21 @@
-extension Algorithms {
-    
-    /// Determines if both collections have the same elements (regardless of order)
-    ///
-    /// >Time Complexity: O(n)
-    public static func haveSameElements<C: Collection>(_ c1: C, _ c2: C) -> Bool where C.Element: Hashable {
-        guard c1.count == c2.count else { return false }
-        let freq1 = Algorithms.countFrequency(c1)
-        let freq2 = Algorithms.countFrequency(c2)
-        guard freq1 == freq2 else { return false }
-        return true
+extension Collection where Element: Hashable {
+    public func hasSameElements(as c2: Self) -> Bool {
+        guard self.count == c2.count else { return false }
+        let freq1 = self.countFrequency()
+        let freq2 = c2.countFrequency()
+        return freq1 == freq2
     }
 }
+
+// MARK: Parallel
+extension Collection where Element: Hashable & Sendable, Self: Sendable {
+    @available(macOS 10.15, iOS 13, *)
+    func hasSameElements(as c2: Self) async -> Bool {
+        guard self.count == c2.count else { return false }
+        async let freq1 = self.countFrequency()
+        async let freq2 = c2.countFrequency()
+        return (await freq1) == (await freq2)
+    }
+    
+}
+
