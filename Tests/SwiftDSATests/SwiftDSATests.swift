@@ -12,6 +12,14 @@ import Testing
     }
     
     @Test(arguments: [
+        ([-1,0,1,2,-1,-4], [[-1,-1,2],[-1,0,1]]),
+//        ([0, 1, 1], [])
+    ])
+    func _15_threeSum(_ nums: [Int], expected: [[Int]]) {
+        #expect(Solutions._15_threeSum(nums) == expected)
+    }
+    
+    @Test(arguments: [
         ("()", true), ("()[]{}", true), ("(]", false), ("([])", true)
     ])
     func _20_validParentheses(s: String, expected: Bool) {
