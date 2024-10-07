@@ -4,11 +4,34 @@
         "type": "lldb",
         "name": "Debug swift-executable",
         "request": "launch",
-        "sourceLanguages": ["swift"],
-        "args": ["--hello", "world"],
+        "sourceLanguages": [
+          "swift"
+        ],
+        "args": [
+          "--hello",
+          "world"
+        ],
         "cwd": "${workspaceFolder}",
         "program": "${workspaceFolder}/.build/debug/swift-executable",
         "preLaunchTask": "swift: Build Debug swift-executable"
+      },
+      {
+        "type": "swift-lldb",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:SwiftDSA}",
+        "name": "Debug SwiftDSABenchmark",
+        "program": "${workspaceFolder:SwiftDSA}/.build/debug/SwiftDSABenchmark",
+        "preLaunchTask": "swift: Build Debug SwiftDSABenchmark"
+      },
+      {
+        "type": "swift-lldb",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:SwiftDSA}",
+        "name": "Release SwiftDSABenchmark",
+        "program": "${workspaceFolder:SwiftDSA}/.build/release/SwiftDSABenchmark",
+        "preLaunchTask": "swift: Build Release SwiftDSABenchmark"
       }
     ]
   }
