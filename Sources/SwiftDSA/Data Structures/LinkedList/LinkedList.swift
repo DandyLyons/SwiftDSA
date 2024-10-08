@@ -5,10 +5,35 @@
 /// https://www.kodeco.com/books/data-structures-algorithms-in-swift/v3.0/chapters/6-linked-list
 /// 
 public struct LinkedList<Value> {
+    /// the first node of the linked list
     internal(set) public var head: Node<Value>?
+    /// the last node of the linked list
     internal(set) public var tail: Node<Value>?
 
+    /// Creates an empty linked list
     public init() {}
+    
+    /// Creates a linked list with elements in the same order that they were given
+    ///
+    /// >Time Complexity:O(n)
+    public init(_ elements: any Collection<Value>) {
+        if let first = elements.first {
+            self.head = Node(value: first)
+        } else {
+            head = nil
+            tail = nil
+            return
+        }
+        var prevNode = head
+        var currentNode = head
+        for element in elements.dropFirst() {
+            currentNode = Node(value: element)
+            prevNode?.next = currentNode
+            prevNode = currentNode
+        }
+        tail = currentNode
+    }
+    
     public var isEmpty: Bool {
         head == nil
     }
@@ -159,6 +184,18 @@ public struct LinkedList<Value> {
         tail = newNode
     }
     
+    /// Creates new reference copies of each of the nodes (only if the linked list is referenced
+    /// by more than one object).
+    ///
+    /// Use this method if you need a reference to the new copy of the node. Otherwise use
+    /// ``copyNodesIfNecessary()``.
+    ///
+    /// This method will do nothing if the references are already uniquely referenced.
+    /// To be used for "Copy On Write" implementation.
+    ///
+    /// >Time Complexity:
+    /// >O(n) if the copy is performed.
+    /// >O(1) if the copy is skipped.
     mutating func copyNodes(returningCopyOf node: Node<Value>?) -> Node<Value>? {
         guard !isKnownUniquelyReferenced(&head) else {
             return nil
@@ -179,6 +216,45 @@ public struct LinkedList<Value> {
         }
         
         return nodeCopy
+    }
+    
+    /// Returns a copy of the current linked list, reversed.
+    ///
+    /// >Room For Improvement:
+    /// >This algorithm requires reallocating each node which increases memory usage
+    /// >as well as longer computation time. A better solution can be found here: https://www.kodeco.com/books/data-structures-algorithms-in-swift/v3.0/chapters/7-linked-list-challenges#toc-chapter-010-anchor-001
+    public func reversedLinkedList() -> Self {
+        let reversedArray = self.reversed() // O(1)
+        return Self(reversedArray) // O(n)
+    }
+    
+    /// Returns the middle node of the linked list.
+    ///
+    /// If there are two middle nodes, then the later node will be returned.
+    ///
+    /// >Examples:
+    /// >1 -> 2 -> 3 -> 4 -> nil
+    /// >// middle is 3
+    /// >
+    /// >1 -> 2 -> 3 -> nil
+    /// >// middle is 2
+    public func middleNode() -> Node<Value>? {
+        guard let head else { return nil }
+        guard let tail else { return head }
+        
+        var traverser: Node<Value>? = head
+        var fastTraverser: Node<Value>? = head // will traverse twice as fast
+        while fastTraverser != nil && fastTraverser !== tail {
+            fastTraverser = fastTraverser?.next?.next
+            traverser = traverser?.next
+        }
+        return traverser
+    }
+    
+    mutating public func append(_ listToAppend: Self) {
+        self.tail?.next = listToAppend.head
+        self.tail = listToAppend.tail
+        copyNodesIfNecessary()
     }
 }
 

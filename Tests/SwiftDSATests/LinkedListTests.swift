@@ -20,7 +20,6 @@ import Testing
         #expect(list.isEmpty == false)
         list.removeAll()
         #expect(list.isEmpty == true)
-        
     }
     
     @Test func arrayLiteral() {
@@ -41,6 +40,12 @@ import Testing
         #expect(list1 != list2)
         list2.push(3)
         #expect(list1 == list2)
+        
+        list1.append(4)
+        #expect(list1 == [3, 0, 1, 2, 4])
+        
+        list1.append([5, 6])
+        #expect(list1 == [3, 0, 1, 2, 4, 5, 6])
     }
     
     @Test func pop() {
@@ -147,5 +152,34 @@ import Testing
         #expect(node0Copy1 !== node0Copy3)
         #expect(node1Copy1 !== node1Copy3)
         #expect(node2Copy1 !== node2Copy3)
+    }
+    
+    @Test func initCollection() {
+        let array = [0, 1, 2, 3]
+        let linkedList = LinkedList(array)
+        #expect(linkedList == [0, 1, 2, 3])
+        #expect(linkedList.head?.value == 0)
+        #expect(linkedList.tail?.value == 3)
+    }
+    
+    @Test func reversedLinkedList() {
+        let linkedList = LinkedList([0, 1, 2, 3])
+        let reversedLinkedList = linkedList.reversedLinkedList()
+        #expect(reversedLinkedList == [3, 2, 1, 0])
+    }
+    
+    @Test func middleNode() {
+        let list1: LinkedList = [1, 2, 3, 4]
+        #expect(list1.middleNode()?.value == 3)
+        
+        let list2: LinkedList = [1, 2, 3]
+        #expect(list2.middleNode()?.value == 2)
+    }
+    
+    @Test func appendList() {
+        var list1: LinkedList = [0, 1, 2]
+        let list2: LinkedList = [3, 4, 5]
+        list1.append(list2)
+        #expect(list1 == [0, 1, 2, 3, 4, 5])
     }
 }
