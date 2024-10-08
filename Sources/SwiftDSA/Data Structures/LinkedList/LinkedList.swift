@@ -251,9 +251,23 @@ public struct LinkedList<Value> {
         return traverser
     }
     
+    /// Appends another linked list to this linked list
+    ///
+    /// >Time Complexity: O(1)
     mutating public func append(_ listToAppend: Self) {
         self.tail?.next = listToAppend.head
         self.tail = listToAppend.tail
+        copyNodesIfNecessary()
+    }
+    
+    /// Prepends another linked list to this linked list
+    ///
+    /// >Time Complexity: O(1)
+    mutating public func prepend(_ listToPrepend: Self) {
+        let oldList = self
+        self.head = listToPrepend.head
+        listToPrepend.tail?.next = oldList.head
+        self.tail = oldList.tail
         copyNodesIfNecessary()
     }
 }

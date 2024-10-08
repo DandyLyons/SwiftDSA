@@ -182,4 +182,11 @@ import Testing
         list1.append(list2)
         #expect(list1 == [0, 1, 2, 3, 4, 5])
     }
+    
+    @Test func prependList() {
+        var list1: LinkedList = [0, 1, 2]
+        let list2: LinkedList = [3, 4, 5]
+        list1.prepend(list2)
+        #expect(list1 == [3, 4, 5, 0, 1, 2])
+    }
 }
