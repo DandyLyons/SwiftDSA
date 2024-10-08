@@ -189,4 +189,11 @@ import Testing
         list1.prepend(list2)
         #expect(list1 == [3, 4, 5, 0, 1, 2])
     }
+    
+    @Test func mergeSortedLists() {
+        let list1: LinkedList = [1, 2, 3]
+        let list2: LinkedList = [-3, -2, -1]
+        let mergeSortedList = mergeSorted(list1, list2)
+        #expect(mergeSortedList == [-3, -2, -1, 1, 2, 3])
+    }
 }
