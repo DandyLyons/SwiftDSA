@@ -327,8 +327,8 @@ extension LinkedList: CustomStringConvertible {
 
 extension LinkedList {
     public class Node<V> {
-        var value: V
-        var next: Node<V>?
+        internal(set) public var value: V
+        internal(set) public var next: Node<V>?
         init(value: V, next: Node<V>? = nil) {
             self.value = value
             self.next = next

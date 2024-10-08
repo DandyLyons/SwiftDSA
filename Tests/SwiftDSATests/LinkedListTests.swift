@@ -1,4 +1,4 @@
-@testable import SwiftDSA
+import SwiftDSA
 import Testing
 
 @Suite struct LinkedListTests {
