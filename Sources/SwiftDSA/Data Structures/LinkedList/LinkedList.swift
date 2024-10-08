@@ -270,6 +270,52 @@ public struct LinkedList<Value> {
         self.tail = oldList.tail
         copyNodesIfNecessary()
     }
+    
+    /// Removes all elements that satisfy the given condition.
+    ///
+    /// >Time Complexity: O(n)
+    ///
+    /// ## Example Usage
+    /// ```swift
+    /// var list: LinkedList = [0, 0, 1, 3, 4, 2, 5, 3]
+    /// list.removeAll(where: { $0 <= 2 })
+    /// // list == [3, 4, 5, 3]
+    /// ```
+    mutating public func removeAll(where shouldBeRemoved: (Value) throws -> Bool) rethrows {
+        copyNodesIfNecessary()
+        while let head = self.head, try shouldBeRemoved(head.value) {
+            self.head = self.head?.next
+        }
+        
+        var prev = self.head
+        var current = self.head?.next
+        while let currentNode = current {
+            guard try !shouldBeRemoved(currentNode.value) else {
+                // the value should be removed
+                // so let's remove it here.
+                prev?.next = currentNode.next
+                current = prev?.next
+                continue
+            }
+            prev = current
+            current = current?.next
+        }
+        tail = prev
+    }
+    
+    /// Removes all elements of the given value
+    ///
+    /// >Time Complexity: O(n)
+    ///
+    /// ## Example Usage
+    /// ```swift
+    /// var list: LinkedList = [0, 0, 2, 1, 3, 4, 5, 3]
+    /// list.removeAll(3)
+    /// // list == [0, 0, 2, 1, 4, 5]
+    /// ```
+    mutating public func removeAll(_ value: Value) where Value: Equatable {
+        self.removeAll(where: { $0 == value })
+    }
 }
 
 extension LinkedList: CustomStringConvertible {

@@ -196,4 +196,39 @@ import Testing
         let mergeSortedList = mergeSorted(list1, list2)
         #expect(mergeSortedList == [-3, -2, -1, 1, 2, 3])
     }
+    
+    @Test func removeAllOfValue() {
+        let list: LinkedList = [0, 0, 2, 1, 3, 4, 5, 3]
+ 
+        var copy1 = list
+        copy1.removeAll(0)
+        #expect(copy1 == [2, 1, 3, 4, 5, 3])
+        
+        var copy2 = list
+        copy2.removeAll(2)
+        #expect(copy2 == [0, 0, 1, 3, 4, 5, 3])
+        
+        var copy3 = list
+        copy3.removeAll(1)
+        #expect(copy3 == [0, 0, 2, 3, 4, 5, 3])
+        
+        var copy4 = list
+        copy4.removeAll(3)
+        #expect(copy4 == [0, 0, 2, 1, 4, 5])
+        
+        var copy5 = list
+        copy5.removeAll(4)
+        #expect(copy5 == [0, 0, 2, 1, 3, 5, 3])
+        
+        var copy6 = list
+        copy6.removeAll(5)
+        #expect(copy6 == [0, 0, 2, 1, 3, 4, 3])
+    }
+    
+    @Test func removeAllWhere() {
+        var list: LinkedList = [0, 0, 2, 1, 3, 4, 5, 3]
+        list.removeAll(where: { $0 <= 2 })
+        #expect(list == [3, 4, 5, 3])
+        
+    }
 }
