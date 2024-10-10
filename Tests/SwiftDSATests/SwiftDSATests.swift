@@ -16,9 +16,7 @@ import Testing
         ([0, 1, 1], [])
     ])
     func _15_threeSum(_ nums: [Int], expected: [[Int]]) {
-        for array in expected {
-            #expect(Solutions._15_threeSum(nums).contains(array))
-        }
+        #expect(Solutions._15_threeSum(nums).hasSameElements(as: expected))
     }
     
     @Test(arguments: [
@@ -33,10 +31,8 @@ import Testing
         (3, ["((()))","(()())","(())()","()(())","()()()"])
     ])
     func _22_generateParenthesis(n: Int, expected: [String]) {
-        for string in expected {
-            let contains = Solutions._22_generateParenthesis(n).contains(string)
-            #expect(contains == true)
-        }
+        let result = Solutions._22_generateParenthesis(n)
+        #expect(result.hasSameElements(as: expected))
     }
 
     @Test(arguments: [
@@ -48,9 +44,7 @@ import Testing
         let strings = strings.sorted()
         let expected = expected.map { $0.sorted() }
         let groups = Solutions.groupAnagrams(strings)
-        for group in groups {
-            #expect(expected.contains(group))
-        }
+        #expect(groups.hasSameElements(as: expected))
         #expect(groups.count == expected.count)
     }
     
@@ -138,9 +132,7 @@ import Testing
     ])
     func _347_topKFrequentElements(_ nums: [Int], _ k: Int, expected: [Int]) {
         let result = Solutions._347_topKFrequent(nums, k)
-        for int in expected {
-            #expect(result.contains(int))
-        }
+        #expect(result.hasSameElements(as: expected))
     }
     
     @Test(arguments: [

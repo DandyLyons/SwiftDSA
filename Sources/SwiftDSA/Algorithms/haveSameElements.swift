@@ -1,4 +1,5 @@
 extension Collection where Element: Hashable {
+    /// Check for collection equality while ignoring order
     public func hasSameElements(as c2: Self) -> Bool {
         guard self.count == c2.count else { return false }
         let freq1 = self.countFrequency()
@@ -9,6 +10,7 @@ extension Collection where Element: Hashable {
 
 // MARK: Parallel
 extension Collection where Element: Hashable & Sendable, Self: Sendable {
+    /// Check for collection equality while ignoring order
     @available(macOS 10.15, iOS 13, *)
     func hasSameElements(as c2: Self) async -> Bool {
         guard self.count == c2.count else { return false }
