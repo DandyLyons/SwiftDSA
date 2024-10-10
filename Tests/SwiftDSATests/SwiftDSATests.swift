@@ -142,4 +142,11 @@ import Testing
             #expect(result.contains(int))
         }
     }
+    
+    @Test(arguments: [
+        ([-1, 0, 3, 5, 9, 12], 9, 4),
+        ([-1, 0, 3, 5, 9, 12], 2, -1)
+    ]) func _704_binarySearch(nums: [Int], target: Int, expected: Int) {
+        #expect(Solutions._704_binarySearch(nums, target) == expected)
+    }
 }
