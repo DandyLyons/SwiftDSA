@@ -7,7 +7,7 @@ extension Solutions {
     /// 
     /// Leetcode: https://leetcode.com/problems/top-k-frequent-elements/
     /// Neetcode: https://neetcode.io/problems/top-k-elements-in-list 
-    static func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
+    static func _347_topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
         var count = [Int: Int]()
         for num in nums {
             count[num, default: 1] += 1

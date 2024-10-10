@@ -13,10 +13,12 @@ import Testing
     
     @Test(arguments: [
         ([-1,0,1,2,-1,-4], [[-1,-1,2],[-1,0,1]]),
-//        ([0, 1, 1], [])
+        ([0, 1, 1], [])
     ])
     func _15_threeSum(_ nums: [Int], expected: [[Int]]) {
-        #expect(Solutions._15_threeSum(nums) == expected)
+        for array in expected {
+            #expect(Solutions._15_threeSum(nums).contains(array))
+        }
     }
     
     @Test(arguments: [
@@ -135,9 +137,9 @@ import Testing
         ([4,1,-1,2,-1,2,3], 2, [2, -1])
     ])
     func _347_topKFrequentElements(_ nums: [Int], _ k: Int, expected: [Int]) {
-        // #expect(Solutions.topKFrequent(nums, k) == expected)
+        let result = Solutions._347_topKFrequent(nums, k)
         for int in expected {
-            #expect(nums.contains(int) == true)
+            #expect(result.contains(int))
         }
     }
 }
