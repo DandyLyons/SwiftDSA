@@ -17,6 +17,17 @@ public struct XYGrid<Element> {
             }
         }
     }
+    
+    public init(rowsCount: Int, columnsCount: Int, values: some Sequence<Element>, defaultValue: Element) {
+        self.init(rowsCount: rowsCount, columnsCount: columnsCount, defaultValue: defaultValue)
+        for value in values {
+            for row in 0..<rowsCount {
+                for column in 0..<columnsCount {
+                    self[column, row] = value
+                }
+            }
+        }
+    }
 
     /// The number of rows in the grid. 
     /// 

@@ -24,6 +24,11 @@ import Testing
         #expect(grid.rowsCount == 3)
         #expect(grid.columnsCount == 3)
     }
+    
+    @Test func initWithValues() {
+        let expected = Self.startingPoint
+        let actual = XYGrid<Int>(rowsCount: 3, columnsCount: 3, values: [1, 2, 3, 4, 5, 6, 7, 8, 9], defaultValue: 0)
+    }
 
     @Test func rowAtFunc() {
         let grid = Self.startingPoint
@@ -266,5 +271,5 @@ import Testing
         #expect(originAfter == expectedOrigin)
         #expect(destAfter == expectedDest)
     }
-    
 }
+
