@@ -1,5 +1,5 @@
 extension XYGrid {
-    public struct Coordinate: Hashable, Sendable {
+    public struct Coordinate: Hashable, Sendable, Codable {
         public var x: Int
         public var y: Int
         

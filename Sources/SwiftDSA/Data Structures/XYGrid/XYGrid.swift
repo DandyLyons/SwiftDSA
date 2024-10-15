@@ -2,6 +2,8 @@
 extension XYGrid: Sendable where Element: Sendable {}
 extension XYGrid: Equatable where Element: Equatable {}
 extension XYGrid: Hashable where Element: Hashable {}
+extension XYGrid: Codable where Element: Codable {}
+
 public struct XYGrid<Element> {
     public typealias Store = [Coordinate: Element]
     var store: Store
