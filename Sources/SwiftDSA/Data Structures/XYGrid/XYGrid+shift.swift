@@ -62,7 +62,7 @@ extension XYGrid {
         
         // move the leftmost element to the rightmost position
         let first = rowAndXY.first!
-        let lastXY = Coordinate(x: columnsCount, y: rowIndex)
+        let lastXY = Coordinate(x: columnsCount - 1, y: rowIndex)
         store[lastXY] = first.value
     }
     
@@ -152,7 +152,7 @@ extension XYGrid {
         
         // move the topmost element to the bottommost position
         let first = columnAndXY.first!
-        let lastXY = Coordinate(x: columnIndex, y: rowsCount)
+        let lastXY = Coordinate(x: columnIndex, y: rowsCount - 1)
         store[lastXY] = first.value
     }
     

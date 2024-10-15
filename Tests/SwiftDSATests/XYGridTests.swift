@@ -20,7 +20,7 @@ import Testing
 
     @Test func _init() {
         let grid = Self.startingPoint
-        #expect(grid.store.count == 9)
+        #expect(grid.count == 9)
         #expect(grid.rowsCount == 3)
         #expect(grid.columnsCount == 3)
     }
@@ -208,4 +208,63 @@ import Testing
         #expect(grid[1, 2] == 2)
         #expect(grid[2, 2] == 3)
     }
+    
+    
+    @Test(arguments: [
+        (XYGrid<Int>.ShiftType.row, 0, XYGrid<Int>.ShiftDirection.left, 1, [2, 3, 1]),
+        (.row, 0, .right, 1, [3, 1, 2]),
+        (.column, 0, .up, 1, [4, 7, 1]),
+        (.column, 0, .down, 1, [7, 1, 4]),
+        (.row, 0, .left, 2, [3, 1, 2]),
+        (.row, 0, .right, 2, [2, 3, 1]),
+        (.column, 0, .up, 2, [7, 1, 4]),
+        (.column, 0, .down, 2, [4, 7, 1]),
+    ]) func shiftInline(
+        shiftType: XYGrid<Int>.ShiftType,
+        index: Int,
+        direction: XYGrid<Int>.ShiftDirection,
+        by amount: Int,
+        expected: [Int]
+    ) {
+        var grid = Self.startingPoint
+        let result = grid.shift(shiftType, at: index, direction, by: amount)
+        #expect(result.map(\.value) == expected)
+    }
+    
+    @Test(arguments: [
+        (XYGrid<Int>.ShiftType.row, 0, XYGrid<Int>.ShiftDirection.down, 1, [4, 5, 6], [1, 2, 3]),
+        
+    ]) func shiftOutOfLine(
+        shiftType: XYGrid<Int>.ShiftType,
+        index: Int,
+        direction: XYGrid<Int>.ShiftDirection,
+        by amount: Int,
+        expectedOrigin: [Int], // what the origin row should look like after mutation
+        expectedDest: [Int] // what the destination row should look like after mutation
+    ) {
+        var grid = Self.startingPoint
+        grid.shift(shiftType, at: index, direction, by: amount)
+        let originAfter = switch shiftType {
+            case .row: grid.row(at: index)
+            case .column: grid.column(at: index)
+        }
+        let destAfter: [Int]
+        switch (shiftType, direction) {
+            case (.row, .down):
+                destAfter = grid.row(at: index + amount)
+            case (.row, .up):
+                destAfter = grid.row(at: index - amount)
+            case (.column, .left):
+                destAfter = grid.column(at: index - amount)
+            case (.column, .right):
+                destAfter = grid.column(at: index + amount)
+            default:
+                destAfter = []
+                #expect(true == false, "This is an invalid test case")
+                break
+        }
+        #expect(originAfter == expectedOrigin)
+        #expect(destAfter == expectedDest)
+    }
+    
 }
