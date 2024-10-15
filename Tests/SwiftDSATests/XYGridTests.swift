@@ -237,39 +237,20 @@ import Testing
     }
     
     @Test(arguments: [
-        (XYGrid<Int>.ShiftType.row, 0, XYGrid<Int>.ShiftDirection.down, 1, [4, 5, 6], [1, 2, 3]),
+        (XYGrid<Int>.ShiftType.row, 0, XYGrid<Int>.ShiftDirection.down, 1, [4, 5, 6, 1, 2, 3, 7, 8, 9]),
         
     ]) func shiftOutOfLine(
         shiftType: XYGrid<Int>.ShiftType,
         index: Int,
         direction: XYGrid<Int>.ShiftDirection,
         by amount: Int,
-        expectedOrigin: [Int], // what the origin row should look like after mutation
-        expectedDest: [Int] // what the destination row should look like after mutation
+        expectedOrder: [Int]
     ) {
-        var grid = Self.startingPoint
-        grid.shift(shiftType, at: index, direction, by: amount)
-        let originAfter = switch shiftType {
-            case .row: grid.row(at: index)
-            case .column: grid.column(at: index)
-        }
-        let destAfter: [Int]
-        switch (shiftType, direction) {
-            case (.row, .down):
-                destAfter = grid.row(at: index + amount)
-            case (.row, .up):
-                destAfter = grid.row(at: index - amount)
-            case (.column, .left):
-                destAfter = grid.column(at: index - amount)
-            case (.column, .right):
-                destAfter = grid.column(at: index + amount)
-            default:
-                destAfter = []
-                #expect(true == false, "This is an invalid test case")
-                break
-        }
-        #expect(originAfter == expectedOrigin)
-        #expect(destAfter == expectedDest)
+        var actualGrid = Self.startingPoint
+        actualGrid.shift(shiftType, at: index, direction, by: amount)
+        
+        let expectedGrid = XYGrid(rowsCount: 3, columnsCount: 3, values: expectedOrder, defaultValue: 0)
+        #expect(actualGrid == expectedGrid)
     }
 }
 

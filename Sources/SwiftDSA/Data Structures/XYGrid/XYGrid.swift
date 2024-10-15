@@ -18,13 +18,14 @@ public struct XYGrid<Element> {
         }
     }
     
-    public init(rowsCount: Int, columnsCount: Int, values: some Sequence<Element>, defaultValue: Element) {
+    public init(rowsCount: Int, columnsCount: Int, values: [Element], defaultValue: Element) {
         self.init(rowsCount: rowsCount, columnsCount: columnsCount, defaultValue: defaultValue)
-        for value in values {
-            for row in 0..<rowsCount {
-                for column in 0..<columnsCount {
-                    self[column, row] = value
-                }
+        var currentValueIndex = 0
+        
+        for row in 0..<rowsCount {
+            for column in 0..<columnsCount {
+                self[column, row] = values[currentValueIndex]
+                currentValueIndex += 1
             }
         }
     }
