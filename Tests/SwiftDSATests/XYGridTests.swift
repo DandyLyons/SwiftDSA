@@ -319,6 +319,27 @@ import Testing
         }
     }
     
+    @Test func swapInvalid() {
+        var grid = Self.startingPoint
+        let swap1 = grid.swap(
+            .init(x: -1, y: -1),
+            and: .init(x: 0, y: 0)
+        )
+        #expect(swap1 == .lhsInvalid)
+        let swap2 = grid.swap(
+            .init(x: 0, y: 0),
+            and: .init(x: -1, y: -1)
+        )
+        #expect(swap2 == .rhsInvalid)
+        let swap3 = grid.swap(
+            .init(x: -1, y: -1),
+            and: .init(x: -1, y: -1)
+        )
+        #expect(swap3 == .bothInvalid)
+        
+        #expect(grid == Self.startingPoint)
+    }
+    
     @Test("swapRow(_:and:)", arguments: [
         (0, 2, [[7, 8, 9], [4, 5, 6], [1, 2, 3]]),
         (0, 1, [[4, 5, 6], [1, 2, 3], [7, 8, 9]]),
