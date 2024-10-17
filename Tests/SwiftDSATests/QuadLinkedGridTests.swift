@@ -58,4 +58,13 @@ struct QuadLinkedGridTests {
         let firstColumn = grid.column(at: 0)
         #expect(firstColumn == [0, 0, 0, 0, 0])
     }
+    
+    @Test(arguments: [
+        ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 3)
+    ])
+    func shiftRow(elements: [Int], columns: Int) {
+        var grid = QuadLinkedGrid(elements: elements, columns: columns)
+        #expect(grid.count == elements.count)
+        
+    }
 }
