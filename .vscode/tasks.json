@@ -5,10 +5,34 @@
         "type": "swift",
         "label": "Swift Build All - Release",
         "detail": "swift build --build-tests",
-        "args": ["build", "--build-tests", "-c", "release"],
+        "args": [
+          "build",
+          "--build-tests",
+          "-c",
+          "release"
+        ],
         "env": {},
         "cwd": "${workspaceFolder}",
         "group": "build"
+      },
+      {
+        "type": "swift",
+        "args": [
+          "build",
+          "--product",
+          "SwiftDSABenchmark",
+          "-Xswiftc",
+          "-diagnostic-style=llvm"
+        ],
+        "env": {},
+        "cwd": "/Users/daniellyons/Developer/My Swift Packages/SwiftDSA",
+        "disableTaskQueue": true,
+        "dontTriggerTestDiscovery": true,
+        "showBuildStatus": "swiftStatus",
+        "group": "build",
+        "problemMatcher": [],
+        "label": "swift: Build Debug SwiftDSABenchmark",
+        "detail": "swift build --product SwiftDSABenchmark -Xswiftc -diagnostic-style=llvm"
       }
     ]
   }
