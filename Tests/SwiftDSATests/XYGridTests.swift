@@ -1,3 +1,4 @@
+import CustomDump
 import SwiftDSA
 import Testing
 
@@ -17,7 +18,49 @@ import Testing
         grid[2, 2] = 9
         return grid
     }()
+    
+    /// This type is just created because we can't conform tuples to Equatable
+    struct KeyAndValue: Equatable {
+        let key: Coordinate
+        let value: Int
+    }
+    
+    static let rowsAndXY = [
+        [
+            KeyAndValue(key: .init(x: 0, y: 0), value: 1),
+            KeyAndValue(key: .init(x: 1, y: 0), value: 2),
+            KeyAndValue(key: .init(x: 2, y: 0), value: 3)
+        ],
+        [
+            KeyAndValue(key: .init(x: 0, y: 1), value: 4),
+            KeyAndValue(key: .init(x: 1, y: 1), value: 5),
+            KeyAndValue(key: .init(x: 2, y: 1), value: 6)
+        ],
+        [
+            KeyAndValue(key: .init(x: 0, y: 2), value: 7),
+            KeyAndValue(key: .init(x: 1, y: 2), value: 8),
+            KeyAndValue(key: .init(x: 2, y: 2), value: 9)
+        ],
+    ]
 
+    static let columnsAndXY = [
+        [
+            KeyAndValue(key: .init(x: 0, y: 0), value: 1),
+            KeyAndValue(key: .init(x: 0, y: 1), value: 4),
+            KeyAndValue(key: .init(x: 0, y: 2), value: 7)
+        ],
+        [
+            KeyAndValue(key: .init(x: 1, y: 0), value: 2),
+            KeyAndValue(key: .init(x: 1, y: 1), value: 5),
+            KeyAndValue(key: .init(x: 1, y: 2), value: 8)
+        ],
+        [
+            KeyAndValue(key: .init(x: 2, y: 0), value: 3),
+            KeyAndValue(key: .init(x: 2, y: 1), value: 6),
+            KeyAndValue(key: .init(x: 2, y: 2), value: 9)
+        ],
+    ]
+    
     @Test func _init() {
         let grid = Self.startingPoint
         #expect(grid.count == 9)
@@ -28,15 +71,43 @@ import Testing
     @Test func initWithValues() {
         let expected = Self.startingPoint
         let actual = XYGrid<Int>(rowsCount: 3, columnsCount: 3, values: [1, 2, 3, 4, 5, 6, 7, 8, 9], defaultValue: 0)
+        #expect(actual == expected)
+        #expect(actual.rowsCount == 3)
+        #expect(actual.columnsCount == 3)
+        #expect(actual.count == 9)
     }
-
+    
     @Test func rowAtFunc() {
         let grid = Self.startingPoint
         #expect(grid.row(at: 0) == [1, 2, 3])
         #expect(grid.row(at: 1) == [4, 5, 6])
         #expect(grid.row(at: 2) == [7, 8, 9])
     }
-
+    
+    @Test(arguments: [
+        (0, [11, 22, 33], [[11, 22, 33], [4, 5, 6], [7, 8, 9]]),
+        (1, [44, 55, 66], [[1, 2, 3], [44, 55, 66], [7, 8, 9]]),
+        (2, [77, 88, 99], [[1, 2, 3], [4, 5, 6], [77, 88, 99]])
+    ])
+    func setRowAtFunc(rowIndex: Int, newRow: [Int], expectedRows: [[Int]]) {
+        var grid = Self.startingPoint
+        grid.setRow(at: rowIndex, to: newRow)
+        #expect(expectedRows == grid.rows)
+    }
+    
+    @Test func rowsAndXYVar() {
+        let grid = Self.startingPoint
+        let expected = Self.rowsAndXY
+        
+        // convert tuple to KeyAndValue so that we can conform to equatable for the test
+        let gridKeyAndValue = grid.rowsAndXY.map {
+            $0.map { elem in
+                KeyAndValue(key: elem.key, value: elem.value)
+            }
+        }
+        expectNoDifference(gridKeyAndValue, expected)
+    }
+    
     @Test func rowAndXYAtFunc() {
         let grid = Self.startingPoint
         var rowAndXY: [[(key: Coordinate, value: Int)]] = []
@@ -68,7 +139,7 @@ import Testing
             }
         }
     }
-
+    
     @Test func rowsVar() {
         let grid = Self.startingPoint
         #expect(grid.rows == [
@@ -77,7 +148,7 @@ import Testing
             [7, 8, 9]
         ])
     }
-
+    
     @Test func columnAtFunc() {
         let grid = Self.startingPoint
         #expect(grid.column(at: 0) == [1, 4, 7])
@@ -85,7 +156,31 @@ import Testing
         #expect(grid.column(at: 2) == [3, 6, 9])
     }
 
-   @Test func columnAndXYAtFunc() {
+    @Test(arguments: [
+        (0, [11, 44, 77], [[11, 2, 3], [44, 5, 6], [77, 8, 9]]),
+        (1, [22, 55, 88], [[1, 22, 3], [4, 55, 6], [7, 88, 9]]),
+        (2, [33, 66, 99], [[1, 2, 33], [4, 5, 66], [7, 8, 99]])
+    ])
+    func setColumnAtFunc(columnIndex: Int, newColumn: [Int], expectedRows: [[Int]]) {
+        var grid = Self.startingPoint
+        grid.setColumn(at: columnIndex, to: newColumn)
+        #expect(expectedRows == grid.rows)
+    }
+    
+    @Test func columnsAndXYVar() {
+        let grid = Self.startingPoint
+        let expected = Self.columnsAndXY
+
+        // convert tuple to KeyAndValue so that we can conform to equatable for the test
+        let gridKeyAndValue = grid.columnsAndXY.map {
+            $0.map { elem in
+                KeyAndValue(key: elem.key, value: elem.value)
+            }
+        }
+        expectNoDifference(gridKeyAndValue, expected)
+    }
+    
+    @Test func columnAndXYAtFunc() {
         let grid = Self.startingPoint
         var columnAndXY: [[(key: Coordinate, value: Int)]] = []
         for x in 0..<grid.columnsCount {
@@ -115,8 +210,8 @@ import Testing
                 #expect(expected == actual)
             }
         }
-   }
-
+    }
+    
     @Test func columnsVar() {
         let grid = Self.startingPoint
         #expect(grid.columns == [
@@ -125,7 +220,7 @@ import Testing
             [3, 6, 9]
         ])
     }
-
+    
     @Test func subscriptGet() {
         let grid = Self.startingPoint
         #expect(grid[0,0] == 1)
@@ -138,7 +233,7 @@ import Testing
         #expect(grid[1,2] == 8)
         #expect(grid[2,2] == 9)
     }
-
+    
     @Test func subscriptSet() {
         var grid = Self.startingPoint
         grid[0,0] = 10
@@ -161,26 +256,26 @@ import Testing
         #expect(grid[1,2] == 17)
         #expect(grid[2,2] == 18)
     }
-
+    
     @Test func subscriptGetWithInvalidCoordinate() {
         let grid = Self.startingPoint
         #expect(grid[0, 3] == nil)
         #expect(grid[3, 0] == nil)
         #expect(grid[3, 3] == nil)
     }
-
+    
     @Test func subscriptSetWithInvalidCoordinate() {
         var grid = Self.startingPoint
         grid[0, 3] = 10
         grid[3, 0] = 11
         grid[3, 3] = 12
-
+        
         #expect(grid[0,3] == nil)
         #expect(grid[3,0] == nil)
         #expect(grid[3,3] == nil)
     }
-
-    @Test(arguments: [
+    
+    @Test("swap coordinates", arguments: [
         (Coordinate(x: 0, y: 0), Coordinate(x: 1, y: 0), XYGrid<Int>.SwapResult.success),
     ]) func swap(_ lhs: Coordinate, and rhs: Coordinate, _ expected: XYGrid<Int>.SwapResult) {
         var grid = Self.startingPoint
@@ -189,7 +284,7 @@ import Testing
         let result = grid.swap(lhs, and: rhs)
         let lhsAfter = grid[lhs.x, lhs.y]
         let rhsAfter = grid[rhs.x, rhs.y]
-
+        
         #expect(result == expected)
         if result == .success {
             #expect(lhsBefore == rhsAfter)
@@ -199,31 +294,38 @@ import Testing
             #expect(rhsBefore == rhsAfter)
         }
     }
-
-    @Test func swapRow() {
+    
+    @Test("swapRow(_:and:)", arguments: [
+        (0, 2, [[7, 8, 9], [4, 5, 6], [1, 2, 3]]),
+        (0, 1, [[4, 5, 6], [1, 2, 3], [7, 8, 9]]),
+        (1, 2, [[1, 2, 3], [7, 8, 9], [4, 5, 6]])
+    ]) func swapRow(lhs: Int, rhs: Int, expectedRows: [[Int]]) {
         var grid = Self.startingPoint
-        grid.swapRow(0, and: 2)
-        #expect(grid[0, 0] == 7)
-        #expect(grid[1, 0] == 8)
-        #expect(grid[2, 0] == 9)
-        #expect(grid[0, 1] == 4)
-        #expect(grid[1, 1] == 5)
-        #expect(grid[2, 1] == 6)
-        #expect(grid[0, 2] == 1)
-        #expect(grid[1, 2] == 2)
-        #expect(grid[2, 2] == 3)
+        grid.swapRow(lhs, and: rhs)
+        #expect(expectedRows == grid.rows)
+    }
+    
+    @Test("swapColumn(_:and:)", arguments: [
+        (0, 1, [[2, 1, 3], [5, 4, 6], [8, 7, 9]]),
+        (0, 2, [[3, 2, 1], [6, 5, 4], [9, 8, 7]]),
+        (1, 2, [[1, 3, 2], [4, 6, 5], [7, 9, 8]])
+    ]) func swapColumn(lhs: Int, rhs: Int, expectedRows: [[Int]]) {
+        var grid = Self.startingPoint
+        grid.swapColumn(lhs, and: rhs)
+        #expect(expectedRows == grid.rows)
     }
     
     
     @Test(arguments: [
         (XYGrid<Int>.ShiftType.row, 0, XYGrid<Int>.ShiftDirection.left, 1, [2, 3, 1]),
-        (.row, 0, .right, 1, [3, 1, 2]),
-        (.column, 0, .up, 1, [4, 7, 1]),
-        (.column, 0, .down, 1, [7, 1, 4]),
-        (.row, 0, .left, 2, [3, 1, 2]),
-        (.row, 0, .right, 2, [2, 3, 1]),
-        (.column, 0, .up, 2, [7, 1, 4]),
-        (.column, 0, .down, 2, [4, 7, 1]),
+
+        (XYGrid<Int>.ShiftType.row, 0, XYGrid<Int>.ShiftDirection.right, 1, [3, 1, 2]),
+        (XYGrid<Int>.ShiftType.column, 0, XYGrid<Int>.ShiftDirection.up, 1, [4, 7, 1]),
+        (XYGrid<Int>.ShiftType.column, 0, XYGrid<Int>.ShiftDirection.down, 1, [7, 1, 4]),
+        (XYGrid<Int>.ShiftType.row, 0, XYGrid<Int>.ShiftDirection.left, 2, [3, 1, 2]),
+        (XYGrid<Int>.ShiftType.row, 0, XYGrid<Int>.ShiftDirection.right, 2, [2, 3, 1]),
+        (XYGrid<Int>.ShiftType.column, 0, XYGrid<Int>.ShiftDirection.up, 2, [7, 1, 4]),
+        (XYGrid<Int>.ShiftType.column, 0, XYGrid<Int>.ShiftDirection.down, 2, [4, 7, 1]),
     ]) func shiftInline(
         shiftType: XYGrid<Int>.ShiftType,
         index: Int,
@@ -232,25 +334,72 @@ import Testing
         expected: [Int]
     ) {
         var grid = Self.startingPoint
-        let result = grid.shift(shiftType, at: index, direction, by: amount)
-        #expect(result.map(\.value) == expected)
+        let _ = grid.shift(shiftType, at: index, direction, by: amount)
+            .map(\.value)
+        #warning("TODO: Check result value")
+        
+        let message = """
+
+Difference Found...
+ShiftType: \(shiftType)
+Index: \(index)
+Direction: \(direction)
+Amount: \(amount)
+
+"""
+        
+        switch shiftType {
+            case .row:
+                expectNoDifference(grid.row(at: index), expected, message)
+            case .column:
+                expectNoDifference(grid.column(at: index), expected, message)
+        }
     }
     
+    
+    // TODO: test the returned result value from `shift(_:at:direction:by:)`
     @Test(arguments: [
-        (XYGrid<Int>.ShiftType.row, 0, XYGrid<Int>.ShiftDirection.down, 1, [4, 5, 6, 1, 2, 3, 7, 8, 9]),
-        
+        (XYGrid<Int>.ShiftType.row, 0, XYGrid<Int>.ShiftDirection.down, 1, [[4, 5, 6], [1, 2, 3], [7, 8, 9]]),
+        (.row, 0, .down, 2, [[4, 5, 6], [7, 8, 9], [1, 2, 3]]),
+        (.row, 0, .up, 1, [[4, 5, 6], [7, 8, 9], [1, 2, 3]]),
+        (.row, 0, .up, 2, [[4, 5, 6], [1, 2, 3], [7, 8, 9]]),
+        (.column, 0, .right, 1, [[2, 1, 3], [5, 4, 6], [8, 7, 9]]),
+        (.column, 0, .right, 2, [[2, 3, 1], [5, 6, 4], [8, 9, 7]]),
+        (.column, 0, .left, 1, [[2, 3, 1], [5, 6, 4], [8, 9, 7]]),
+        (.row, 2, .down, 2, [[1, 2, 3], [7, 8, 9], [4, 5, 6]]),
+        (.column, 2, .right, 2, [[1, 3, 2], [4, 6, 5], [7, 9, 8]]),
+        (.column, 0, .left, 2, [[2, 1, 3], [5, 4, 6], [8, 7, 9]]),
     ]) func shiftOutOfLine(
         shiftType: XYGrid<Int>.ShiftType,
         index: Int,
         direction: XYGrid<Int>.ShiftDirection,
         by amount: Int,
-        expectedOrder: [Int]
+        expectedRows: [[Int]]
     ) {
         var actualGrid = Self.startingPoint
-        actualGrid.shift(shiftType, at: index, direction, by: amount)
+        let _ = actualGrid.shift(shiftType, at: index, direction, by: amount)
+        // TODO: 👆🏼 test the returned result value
         
-        let expectedGrid = XYGrid(rowsCount: 3, columnsCount: 3, values: expectedOrder, defaultValue: 0)
-        #expect(actualGrid == expectedGrid)
+        let message = """
+
+Difference Found...
+ShiftType: \(shiftType)
+Index: \(index)
+Direction: \(direction)
+Amount: \(amount)
+
+"""
+        #expect(expectedRows == actualGrid.rows, Comment(rawValue: message))
+        
+        
     }
 }
 
+
+extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
+}
