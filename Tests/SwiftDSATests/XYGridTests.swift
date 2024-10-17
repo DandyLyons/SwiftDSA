@@ -275,6 +275,30 @@ import Testing
         #expect(grid[3,3] == nil)
     }
     
+    @Test func subscriptRow() {
+        var grid = Self.startingPoint
+        grid[row: 1] = [0, 0, 0]
+        #expect(grid[row: 1] == [0, 0, 0])
+        let expectedRows = [
+            [1, 2, 3],
+            [0, 0, 0],
+            [7, 8, 9]
+        ]
+        #expect(grid.rows == expectedRows)
+    }
+    
+    @Test func subscriptColumn() {
+        var grid = Self.startingPoint
+        grid[column: 1] = [0, 0, 0]
+        #expect(grid[column: 1] == [0, 0, 0])
+        let expectedRows = [
+            [1, 0, 3],
+            [4, 0, 6],
+            [7, 0, 9]
+        ]
+        #expect(grid.rows == expectedRows)
+    }
+    
     @Test("swap coordinates", arguments: [
         (Coordinate(x: 0, y: 0), Coordinate(x: 1, y: 0), XYGrid<Int>.SwapResult.success),
     ]) func swap(_ lhs: Coordinate, and rhs: Coordinate, _ expected: XYGrid<Int>.SwapResult) {

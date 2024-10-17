@@ -20,7 +20,7 @@ let package = Package(
 //        .package(url: "https://github.com/pointfreeco/swift-issue-reporting.git", from: "1.4.2"),
 // As of 2024-10-16 there is a naming discrepancy that renders SPM in Xcode unable to resolve SwiftIssueReporting.
 // This is because XCTestDynamicOverlay was renamed to SwiftIssueReporting.
-// The only way I've found to import SwiftIssueReporting here is to depend on swift-custom-dump and import SwiftIssueReporting transitively through the swift-custom-dump package. 
+// The only way I've found to import SwiftIssueReporting here is to depend on swift-custom-dump and import SwiftIssueReporting transitively through the swift-custom-dump package.
     ],
     targets: [
         .target(
