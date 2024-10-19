@@ -435,8 +435,31 @@ Amount: \(amount)
 
 """
         #expect(expectedRows == actualGrid.rows, Comment(rawValue: message))
-        
-        
+    }
+    
+    enum Direction { case above, below, leftOf, rightOf }
+    @Test(arguments: [
+        (Direction.above, Coordinate(x: 0, y: 0), Coordinate(x: 0, y: 2)),
+        (.below, Coordinate(x: 0, y: 1), Coordinate(x: 0, y: 2)),
+        (.leftOf, Coordinate(x: 0, y: 0), Coordinate(x: 2, y: 0)),
+        (.rightOf, Coordinate(x: 0, y: 0), Coordinate(x: 1, y: 0)),
+        (.above, Coordinate(x: 0, y: 1), Coordinate(x: 0, y: 0)),
+        (.leftOf, Coordinate(x: 0, y: 1), Coordinate(x: 2, y: 1)),
+        (.rightOf, Coordinate(x: 0, y: 1), Coordinate(x: 1, y: 1)),
+        (.above, Coordinate(x: 0, y: 2), Coordinate(x: 0, y: 1)),
+        (.below, Coordinate(x: 0, y: 2), Coordinate(x: 0, y: 0)),
+        (.leftOf, Coordinate(x: 0, y: 2), Coordinate(x: 2, y: 2)),
+        (.rightOf, Coordinate(x: 0, y: 2), Coordinate(x: 1, y: 2)),
+        (.leftOf, Coordinate(x: 1, y: 0), Coordinate(x: 0, y: 0)),
+        (.rightOf, Coordinate(x: 2, y: 0), Coordinate(x: 0, y: 0))
+    ]) func relativeCell(direction: Direction, origin: XYGrid<Int>.Coordinate, expectedDest: XYGrid<Int>.Coordinate) {
+        let grid = Self.startingPoint
+        switch direction {
+            case .above: #expect(grid.cell(above: origin) == expectedDest)
+            case .below: #expect(grid.cell(below: origin) == expectedDest, "cell(below:): \(grid.cell(below: origin))")
+            case .leftOf: #expect(grid.cell(leftOf: origin) == expectedDest)
+            case .rightOf: #expect(grid.cell(rightOf: origin) == expectedDest)
+        }
     }
 }
 
