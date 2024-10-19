@@ -10,6 +10,15 @@ extension XYGrid {
     }
 }
 
+// MARK: Validation
+extension XYGrid {
+    public func isValid(_ coord: Coordinate) -> Bool {
+        coord.x >= 0 && coord.x < columnsCount &&
+        coord.y >= 0 && coord.y < rowsCount
+    }
+}
+
+
 // MARK: Relative Coordinates
 extension XYGrid {
     public func cell(above coord: Coordinate) -> Coordinate {

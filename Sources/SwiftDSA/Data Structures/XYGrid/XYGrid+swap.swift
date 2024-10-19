@@ -32,6 +32,30 @@ extension XYGrid {
         return .success
     }
     
+    public mutating func swapWithCell(above cell: Coordinate) {
+        assert(isValid(cell), "Coordinate (\(cell.x), \(cell.y) is not valid")
+        let cellAbove = self.cell(above: cell)
+        swap(cell, and: cellAbove)
+    }
+    
+    public mutating func swapWithCell(below cell: Coordinate) {
+        assert(isValid(cell), "Coordinate (\(cell.x), \(cell.y)) is not valid")
+        let cellBelow = self.cell(below: cell)
+        swap(cell, and: cellBelow)
+    }
+
+    public mutating func swapWithCell(leftOf cell: Coordinate) {
+        assert(isValid(cell), "Coordinate (\(cell.x), \(cell.y) is not valid")
+        let cellLeft = self.cell(leftOf: cell)
+        swap(cell, and: cellLeft)
+    }
+
+    public mutating func swapWithCell(rightOf cell: Coordinate) {
+        assert(isValid(cell), "Coordinate (\(cell.x), \(cell.y) is not valid")
+        let cellRight = self.cell(rightOf: cell)
+        swap(cell, and: cellRight)
+    }
+    
     public mutating func swapRow(_ lhs: Int, and rhs: Int) {
         for x in 0..<columnsCount {
             let leftXY = Coordinate(x: x, y: lhs)

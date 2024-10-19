@@ -461,6 +461,32 @@ Amount: \(amount)
             case .rightOf: #expect(grid.cell(rightOf: origin) == expectedDest)
         }
     }
+    
+    @Test(arguments: [
+        (XYGrid<Int>.Coordinate(x: 0, y: 0), Direction.above, [[7, 2, 3], [4, 5, 6], [1, 8, 9]]),
+        (.init(x: 0, y: 0), .rightOf, [[2, 1, 3], [4, 5, 6], [7, 8, 9]]),
+        (.init(x: 0, y: 0), .below, [[4, 2, 3], [1, 5, 6], [7, 8, 9]]),
+        (.init(x: 0, y: 0), .leftOf, [[3, 2, 1], [4, 5, 6], [7, 8, 9]]),
+        (.init(x: 0, y: 1), .above, [[4, 2, 3], [1, 5, 6], [7, 8, 9]]),
+        (.init(x: 0, y: 1), .rightOf, [[1, 2, 3], [5, 4, 6], [7, 8, 9]]),
+        (.init(x: 0, y: 1), .below, [[1, 2, 3], [7, 5, 6], [4, 8, 9]]),
+        (.init(x: 0, y: 1), .leftOf, [[1, 2, 3], [6, 5, 4], [7, 8, 9]]),
+        (.init(x: 0, y: 2), .above, [[1, 2, 3], [7, 5, 6], [4, 8, 9]]),
+        (.init(x: 0, y: 2), .rightOf, [[1, 2, 3], [4, 5, 6], [8, 7, 9]]),
+        (.init(x: 0, y: 2), .below, [[7, 2, 3], [4, 5, 6], [1, 8, 9]]),
+        (.init(x: 0, y: 2), .leftOf, [[1, 2, 3], [4, 5, 6], [9, 8, 7]]),
+        (.init(x: 1, y: 0), .above, [[1, 8, 3], [4, 5, 6], [7, 2, 9]]),
+        (.init(x: 1, y: 0), .rightOf, [[1, 3, 2], [4, 5, 6], [7, 8, 9]]),
+    ]) func swap(origin: XYGrid<Int>.Coordinate, with direction: Direction, expectedRows: [[Int]]) {
+        var grid = Self.startingPoint
+        switch direction {
+            case .above: grid.swapWithCell(above: origin)
+            case .below: grid.swapWithCell(below: origin)
+            case .leftOf: grid.swapWithCell(leftOf: origin)
+            case .rightOf: grid.swapWithCell(rightOf: origin)
+        }
+        #expect(grid.rows == expectedRows, "origin: \(origin), direction: \(direction)")
+    }
 }
 
 
