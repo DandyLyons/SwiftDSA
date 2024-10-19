@@ -487,6 +487,15 @@ Amount: \(amount)
         }
         #expect(grid.rows == expectedRows, "origin: \(origin), direction: \(direction)")
     }
+    
+    @Test func sequence() {
+        let grid = Self.startingPoint
+        var elements = [Int]()
+        for element in grid {
+            elements.append(element)
+        }
+        #expect(elements == [1, 2, 3, 4, 5, 6, 7, 8, 9])
+    }
 }
 
 

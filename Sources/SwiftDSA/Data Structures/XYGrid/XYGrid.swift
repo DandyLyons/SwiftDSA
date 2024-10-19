@@ -9,11 +9,13 @@ extension XYGrid: Codable where Element: Codable {}
 public struct XYGrid<Element> {
     public typealias Store = [Coordinate: Element]
     var store: Store
+    let defaultValue: Element
 
     public init(rowsCount: Int, columnsCount: Int, defaultValue: Element) {
         self.store = Store()
         self.rowsCount = rowsCount
         self.columnsCount = columnsCount
+        self.defaultValue = defaultValue
         
         for x in 0..<rowsCount {
             for y in 0..<columnsCount {
@@ -64,10 +66,6 @@ self.columnsCount: \(columnsCount), self.columns.count: \(self.columns.count)
     /// This number is always one more than the maximum x value in the grid.
     public let columnsCount: Int
     
-    public var count: Int {
-        rowsCount * columnsCount
-    }
-    
     public var lastRowIndex: Int { rowsCount - 1 }
     public var lastColumnIndex: Int { columnsCount - 1 }
     
@@ -96,6 +94,18 @@ self.columnsCount: \(columnsCount), self.columns.count: \(self.columns.count)
     public func rowAndXY(at rowIndex: Int) -> [Store.Element] {
         store.filter { $0.key.y == rowIndex }
             .sorted(by: { $0.key.x < $1.key.x })
+    }
+    
+    public var cells: [Element] {
+        var result = [Element]()
+        for rowIndex in 0..<rowsCount {
+            for columnIndex in 0..<columnsCount {
+                let coord = Coordinate(x: columnIndex, y: rowIndex)
+                let value = store[coord]!
+                result.append(value)
+            }
+        }
+        return result
     }
     
     public var rows: [[Element]] {
