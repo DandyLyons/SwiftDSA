@@ -16,7 +16,7 @@
         "preLaunchTask": "swift: Build Debug swift-executable"
       },
       {
-        "type": "swift-lldb",
+        "type": "lldb",
         "request": "launch",
         "args": [],
         "cwd": "${workspaceFolder:SwiftDSA}",
@@ -25,7 +25,7 @@
         "preLaunchTask": "swift: Build Debug SwiftDSABenchmark"
       },
       {
-        "type": "swift-lldb",
+        "type": "lldb",
         "request": "launch",
         "args": [],
         "cwd": "${workspaceFolder:SwiftDSA}",

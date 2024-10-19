@@ -495,7 +495,35 @@ Amount: \(amount)
             elements.append(element)
         }
         #expect(elements == [1, 2, 3, 4, 5, 6, 7, 8, 9])
+        var reversedElements = [Int]()
+        for element in grid.reversed() {
+            reversedElements.append(element)
+        }
+        #expect(reversedElements == [9, 8, 7, 6, 5, 4, 3, 2, 1])
     }
+    
+//    // MARK: Collection
+    @Test func collection() {
+        let grid = Self.startingPoint
+        let indexAfter = grid.index(after: Coordinate(x: 0, y: 0))
+        #expect(indexAfter == Coordinate(x: 1, y: 0))
+        
+        #expect(grid[Coordinate(x: 1, y: 0)] == 2)
+        
+        #expect(grid.startIndex == Coordinate(x: 0, y: 0))
+        #expect(grid.endIndex == Coordinate(x: 3, y: 2))
+        
+        let intToStringGrid: [String] = grid.map {
+            String($0)
+        }
+        let expectedStringGrid = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        #expect(intToStringGrid == expectedStringGrid)
+        
+        let invalidLookup = grid[Coordinate(x: -1, y: -1)]
+        let firstValue = grid[0, 0]
+        #expect(invalidLookup == firstValue)
+    }
+    
 }
 
 

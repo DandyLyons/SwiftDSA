@@ -10,6 +10,16 @@ extension XYGrid {
     }
 }
 
+extension XYGrid.Coordinate: Comparable {
+    /// returns if the left hand side is less than the right hand side
+    ///
+    /// An ``XYGrid.Coordinate`` is less than another coordinate if both it's `x` and `y` are less.
+    public static func < (lhs: XYGrid<Element>.Coordinate, rhs: XYGrid<Element>.Coordinate) -> Bool {
+        lhs.x < rhs.x &&
+        lhs.y < rhs.y
+    }
+}
+
 // MARK: Validation
 extension XYGrid {
     public func isValid(_ coord: Coordinate) -> Bool {
