@@ -10,7 +10,7 @@ import Foundation
 
 /// A trie data structure containing words.  Each node is a single
 /// character of a word.
-class Trie: NSObject, NSCoding {
+public struct Trie {
     typealias Node = TrieNode<Character>
     /// The number of words in the trie
     public var count: Int {
@@ -28,31 +28,9 @@ class Trie: NSObject, NSCoding {
     fileprivate var wordCount: Int
     
     /// Creates an empty trie.
-    override init() {
+    public init() {
         root = Node()
         wordCount = 0
-        super.init()
-    }
-    
-    // MARK: NSCoding
-    
-    /// Initializes the trie with words from an archive
-    ///
-    /// - Parameter decoder: Decodes the archive
-    required convenience init?(coder decoder: NSCoder) {
-        self.init()
-        let words = decoder.decodeObject(forKey: "words") as? [String]
-        for word in words! {
-            self.insert(word: word)
-        }
-    }
-    
-    /// Encodes the words in the trie by putting them in an array then encoding
-    /// the array.
-    ///
-    /// - Parameter coder: The object that will encode the array
-    func encode(with coder: NSCoder) {
-        coder.encode(self.words, forKey: "words")
     }
 }
 
@@ -62,7 +40,7 @@ extension Trie {
     /// there is no change.
     ///
     /// - Parameter word: the word to be inserted.
-    func insert(word: String) {
+    mutating func insert(word: String) {
         guard !word.isEmpty else {
             return
         }
@@ -162,7 +140,7 @@ extension Trie {
     /// Mark the last node as non-terminating.
     ///
     /// - Parameter word: the word to be removed
-    func remove(word: String) {
+    mutating func remove(word: String) {
         guard !word.isEmpty else {
             return
         }
