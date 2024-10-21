@@ -12,6 +12,4 @@ extension Trie: Equatable {
         let rhsSet = Set(rhs.words)
         return lhsSet == rhsSet
     }
-    
-    
 }

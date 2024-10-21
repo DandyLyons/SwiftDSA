@@ -137,4 +137,18 @@ import Testing
         trie2.insert(word: "four")
         #expect(trie1 == trie2)
     }
+    
+    @Test func copyOnWrite() {
+        let array = ["One", "Two", "Three"]
+            .map { $0.lowercased() } // Trie will always lowercase strings upon insertion
+        var trie1 = Trie(from: array)
+        var trie2 = trie1
+        trie1.insert(word: "Four")
+        #expect(trie2.count != 4)
+        #expect(trie2.contains(word: "four") != true)
+        
+        var trie3 = trie1
+        trie1.remove(word: "four")
+        #expect(trie3.contains(word: "four") == true)
+    }
 }

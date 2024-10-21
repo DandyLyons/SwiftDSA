@@ -26,7 +26,7 @@ public struct Trie {
     public var words: [String] {
         return wordsInSubtrie(rootNode: root, partialWord: "")
     }
-    fileprivate let root: Node
+    fileprivate var root: Node
     fileprivate var wordCount: Int
     
     /// Creates an empty trie.
@@ -42,6 +42,18 @@ public struct Trie {
             self.insert(word: string)
         }
     }
+    
+    /// Use this function internally to implement copy on write.
+    private mutating func copyNodesIfNecessary() {
+        guard !isKnownUniquelyReferenced(&root) else {
+            return // skip copy if already unique
+        }
+        let wordsArray = self.words
+        root = TrieNode(value: nil, parentNode: nil)
+        for word in wordsArray {
+            self.insert(word: word)
+        }
+    }
 }
 
 // MARK: - Adds methods: insert, remove, contains
@@ -51,6 +63,7 @@ extension Trie {
     ///
     /// - Parameter word: the word to be inserted.
     public mutating func insert(word: String) {
+        copyNodesIfNecessary()
         guard !word.isEmpty else {
             return
         }
@@ -129,7 +142,9 @@ extension Trie {
     ///
     /// - Parameter terminalNode: the node representing the last node
     /// of a word
-    private func deleteNodesForWordEndingWith(terminalNode: Node) {
+    fileprivate func deleteNodesForWordEndingWith(terminalNode: Node) {
+        // ⚠️ This method is technically mutating and therefore we should copyNodesIfNecessary()
+        // However, we are already using copyNodesIfNecessary() in remove(word:) so it shouldn't be necessary here.
         var lastNode = terminalNode
         var character = lastNode.value
         while lastNode.isLeaf, let parentNode = lastNode.parentNode {
@@ -151,6 +166,7 @@ extension Trie {
     ///
     /// - Parameter word: the word to be removed
     public mutating func remove(word: String) {
+        copyNodesIfNecessary()
         guard !word.isEmpty else {
             return
         }

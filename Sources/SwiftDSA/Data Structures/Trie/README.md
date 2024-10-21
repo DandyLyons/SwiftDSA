@@ -1,6 +1,9 @@
 The code for this Trie data structure is originally taken from the [Swift Algorithm Club](https://github.com/kodecocodes/swift-algorithm-club/tree/master?tab=MIT-1-ov-file) repo, licensed under the MIT License (See LICENSE.txt).
 
-Some new contributions have been added since.  
+Some new contributions have been added since: 
+1. Trie has been converted to a struct
+2. Trie now conforms to Codable, Equatable
+3. Trie has value semantics and Copy on Write (🐮)
 
 Original Readme: https://github.com/kodecocodes/swift-algorithm-club/tree/master/Trie
 # Trie
