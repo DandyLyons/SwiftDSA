@@ -1,3 +1,4 @@
+import Foundation
 import SwiftDSA
 import Testing
 
@@ -6,6 +7,15 @@ import Testing
     @Test func _init() {
         let trie = Trie()
         #expect(trie.count == 0)
+    }
+    
+    @Test func _initFromArray() {
+        let array = ["One", "Two", "Three"]
+        let trie = Trie(from: array)
+        #expect(trie.count == array.count)
+        for string in array {
+            #expect(trie.contains(word: string) == true)
+        }
     }
     
     @Test func insert() {
@@ -91,5 +101,40 @@ import Testing
         trie.insert(word: "Team")
         let wordsUpperCase = trie.contains(word: "Te", matchPrefix: true)
         #expect(wordsUpperCase == true)
+    }
+    
+    // MARK: Codable
+    @Test("Encodable behavior should be equivalent to [String]")
+    func codableConformance() throws {
+        let array = ["One", "Two", "Three"]
+            .map { $0.lowercased() } // Trie will always lowercase strings upon insertion
+        let trieBefore = Trie(from: array)
+        let encoder = JSONEncoder()
+        
+        let arrayData = try encoder.encode(array)
+        guard let arrayJSONString = String(data: arrayData, encoding: .utf8) else {
+            Issue.record(); return
+        }
+        
+        let trieData = try encoder.encode(trieBefore)
+        guard let trieJSONString = String(data: trieData, encoding: .utf8) else {
+            Issue.record(); return
+        }
+        
+        let decoder = JSONDecoder()
+        let trieAfter = try decoder.decode(Trie.self, from: trieData)
+        #expect(trieBefore == trieAfter)
+    }
+    
+    @Test func equatableConformance() {
+        let array = ["One", "Two", "Three"]
+            .map { $0.lowercased() } // Trie will always lowercase strings upon insertion
+        var trie1 = Trie(from: array)
+        var trie2 = Trie(from: array)
+        #expect(trie1 == trie2)
+        trie1.insert(word: "Four")
+        #expect(trie1 != trie2)
+        trie2.insert(word: "four")
+        #expect(trie1 == trie2)
     }
 }

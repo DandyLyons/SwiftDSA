@@ -20,7 +20,9 @@ public struct Trie {
     public var isEmpty: Bool {
         return wordCount == 0
     }
-    /// All words currently in the trie
+    /// All words currently in the trie, unsorted
+    ///
+    /// All words will be lowercased.
     public var words: [String] {
         return wordsInSubtrie(rootNode: root, partialWord: "")
     }
@@ -31,6 +33,14 @@ public struct Trie {
     public init() {
         root = Node()
         wordCount = 0
+    }
+    
+    /// Convert an array of strings into a trie
+    public init(from array: [String]) {
+        self.init()
+        for string in array {
+            self.insert(word: string)
+        }
     }
 }
 
@@ -155,12 +165,12 @@ extension Trie {
         wordCount -= 1
     }
     
-    /// Returns an array of words in a subtrie of the trie
+    /// Returns an array of words in a subtrie of the trie, unsorted
     ///
     /// - Parameters:
     ///   - rootNode: the root node of the subtrie
     ///   - partialWord: the letters collected by traversing to this node
-    /// - Returns: the words in the subtrie
+    /// - Returns: the words in the subtrie, unsorted
     fileprivate func wordsInSubtrie(rootNode: Node, partialWord: String) -> [String] {
         var subtrieWords = [String]()
         var previousLetters = partialWord
