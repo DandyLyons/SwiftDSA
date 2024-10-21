@@ -40,7 +40,7 @@ extension Trie {
     /// there is no change.
     ///
     /// - Parameter word: the word to be inserted.
-    mutating func insert(word: String) {
+    public mutating func insert(word: String) {
         guard !word.isEmpty else {
             return
         }
@@ -68,7 +68,7 @@ extension Trie {
     ///   - matchPrefix: whether the search word should match
     ///   if it is only a prefix of other nodes in the trie
     /// - Returns: true if the word is present, false otherwise.
-    func contains(word: String, matchPrefix: Bool = false) -> Bool {
+    public func contains(word: String, matchPrefix: Bool = false) -> Bool {
         guard !word.isEmpty else {
             return false
         }
@@ -140,7 +140,7 @@ extension Trie {
     /// Mark the last node as non-terminating.
     ///
     /// - Parameter word: the word to be removed
-    mutating func remove(word: String) {
+    public mutating func remove(word: String) {
         guard !word.isEmpty else {
             return
         }
@@ -183,7 +183,7 @@ extension Trie {
     /// - Parameters:
     ///   - prefix: the letters for word prefix
     /// - Returns: the words in the subtrie that start with prefix
-    func findWordsWithPrefix(prefix: String) -> [String] {
+    public func findWordsWithPrefix(prefix: String) -> [String] {
         var words = [String]()
         let prefixLowerCased = prefix.lowercased()
         if let lastNode = findLastNodeOf(word: prefixLowerCased) {
