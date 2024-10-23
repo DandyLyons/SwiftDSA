@@ -209,7 +209,7 @@ extension Trie {
     /// - Parameters:
     ///   - prefix: the letters for word prefix
     /// - Returns: the words in the subtrie that start with prefix
-    public func findWordsWithPrefix(prefix: String) -> [String] {
+    public func findWords(withPrefix prefix: String) -> [String] {
         var words = [String]()
         let prefixLowerCased = prefix.lowercased()
         if let lastNode = findLastNodeOf(word: prefixLowerCased) {
