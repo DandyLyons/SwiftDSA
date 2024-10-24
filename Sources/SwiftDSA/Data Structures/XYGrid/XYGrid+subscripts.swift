@@ -9,6 +9,7 @@ extension XYGrid {
                 return // invalid coordinate, do nothing
             }
             store[Coordinate(x: x, y: y)] = newValue
+            _assertIntegrity()
         }
     }
     
@@ -21,6 +22,7 @@ extension XYGrid {
                 return // invalid coordinate, do nothing
             }
             store[coordinate] = newValue
+            _assertIntegrity()
         }
     }
     

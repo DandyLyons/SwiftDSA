@@ -75,6 +75,7 @@ self.columnsCount: \(columnsCount), self.columns.count: \(self.columns.count)
     
     public mutating func setCell(at coord: Coordinate, to newValue: Element) {
         self[xy: coord] = newValue
+        _assertIntegrity()
     }
     
     /// returns the elements in a given row sorted from left to right
@@ -94,6 +95,7 @@ self.columnsCount: \(columnsCount), self.columns.count: \(self.columns.count)
             let destCellCoord = dest[i].key
             self[xy: destCellCoord] = value
         }
+        _assertIntegrity()
     }
     
     /// returns the elements and coordinates in a given row sorted from left to right
@@ -180,6 +182,7 @@ self.columnsCount: \(columnsCount), self.columns.count: \(self.columns.count)
             let destCellCoord = dest[i].key
             self[xy: destCellCoord] = value
         }
+        _assertIntegrity()
     }
     
     public func columnAndXY(at columnIndex: Int) -> [Store.Element] {
