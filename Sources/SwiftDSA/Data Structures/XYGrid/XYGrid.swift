@@ -10,7 +10,7 @@ public struct XYGrid<Element> {
     public typealias Store = [Coordinate: Element]
     var store: Store
     let defaultValue: Element
-
+    
     public init(rowsCount: Int, columnsCount: Int, defaultValue: Element) {
         self.store = Store()
         self.rowsCount = rowsCount
@@ -39,9 +39,9 @@ public struct XYGrid<Element> {
     
     func _assertIntegrity() {
         let isCorrect =
-            store.count == self.count &&
-            self.rows.count == self.rowsCount &&
-            self.columns.count == self.columnsCount
+        store.count == self.count &&
+        self.rows.count == self.rowsCount &&
+        self.columns.count == self.columnsCount
         
         let message = """
 Integrity check failed for XYGrid.
@@ -49,19 +49,19 @@ XYGrid Count: \(count), Store Count: \(store.count)
 self.rowsCount: \(rowsCount), self.rows.count: \(self.rows.count)
 self.columnsCount: \(columnsCount), self.columns.count: \(self.columns.count)
 """
-//        XCTFail(message)
-//        assert(isCorrect, message)
+        //        XCTFail(message)
+        //        assert(isCorrect, message)
         if !isCorrect { reportIssue(message) }
     }
-
-    /// The number of rows in the grid. 
-    /// 
+    
+    /// The number of rows in the grid.
+    ///
     /// This is the number of elements in each column.
     /// This number is always one more than the maximum y value in the grid.
     public let rowsCount: Int
-
+    
     /// The number of columns in the grid
-    /// 
+    ///
     /// This is the number of elements in each row.
     /// This number is always one more than the maximum x value in the grid.
     public let columnsCount: Int
@@ -95,7 +95,7 @@ self.columnsCount: \(columnsCount), self.columns.count: \(self.columns.count)
             self[xy: destCellCoord] = value
         }
     }
-
+    
     /// returns the elements and coordinates in a given row sorted from left to right
     public func rowAndXY(at rowIndex: Int) -> [Store.Element] {
         store.filter { $0.key.y == rowIndex }
@@ -171,7 +171,7 @@ self.columnsCount: \(columnsCount), self.columns.count: \(self.columns.count)
     }
     
     /// sets the elements in the column to the new value.
-    /// 
+    ///
     /// >Precondition: The count of elements in the given `newValues` array must equal the `rowsCount`.
     public mutating func setColumn(at index: Int, to newValues: [Element]) {
         precondition(newValues.count == rowsCount)
@@ -181,13 +181,9 @@ self.columnsCount: \(columnsCount), self.columns.count: \(self.columns.count)
             self[xy: destCellCoord] = value
         }
     }
-
+    
     public func columnAndXY(at columnIndex: Int) -> [Store.Element] {
         store.filter { $0.key.x == columnIndex }
             .sorted(by: { $0.key.y < $1.key.y })
     }
 }
-
-
-
-
