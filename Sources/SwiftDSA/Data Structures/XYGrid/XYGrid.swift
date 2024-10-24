@@ -69,7 +69,13 @@ self.columnsCount: \(columnsCount), self.columns.count: \(self.columns.count)
     public var lastRowIndex: Int { rowsCount - 1 }
     public var lastColumnIndex: Int { columnsCount - 1 }
     
-
+    public func getCell(at coord: Coordinate) -> Element? {
+        self[xy: coord]
+    }
+    
+    public mutating func setCell(at coord: Coordinate, to newValue: Element) {
+        self[xy: coord] = newValue
+    }
     
     /// returns the elements in a given row sorted from left to right
     public func row(at rowIndex: Int) -> [Element] {
