@@ -1,3 +1,12 @@
+extension Sequence where Element: Hashable {
+    /// Check for collection equality while ignoring order
+    public func hasSameElements(as c2: Self) -> Bool {
+        let freq1 = self.countFrequency()
+        let freq2 = c2.countFrequency()
+        return freq1 == freq2
+    }
+}
+
 extension Collection where Element: Hashable {
     /// Check for collection equality while ignoring order
     public func hasSameElements(as c2: Self) -> Bool {

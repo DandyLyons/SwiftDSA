@@ -20,10 +20,14 @@ struct AlgorithmsTests {
     }
     
     @Test
-    func haveSameElements() {
+    func hasSameElements() {
         let array1 = self.array
         let array2 = array1.shuffled()
         #expect(array1.hasSameElements(as: array2) == true)
+        
+        let set1 = Set(0..<1000)
+        let set2 = Set(0..<1000)
+        #expect(Array(set1).hasSameElements(as: Array(set2)))
     }
     
     @Test
