@@ -1,4 +1,5 @@
-extension Collection where Element: Hashable {
+extension Sequence where Element: Hashable {
+    /// count the amount of unique occurences of each value in a type
     public func countFrequency() -> [Element: Int] {
         var result = [Element: Int]()
         for element in self {
