@@ -1,17 +1,3 @@
-/// Check if two values have the same equal value for the same property
-public func value<T, V: Equatable>(_ lhs: T, isEqualTo rhs: T, by keyPath: KeyPath<T, V>) -> Bool {
-    return lhs[keyPath: keyPath] == rhs[keyPath: keyPath]
-}
-
-/// Check if two values have the same equal value for multiple properties of the same type
-///
-/// This function allows you to check for equality on multiple key paths. However, it has the limitation that each key path
-/// must point to a value of the same type.
-public func value<T, V: Equatable>(_ lhs: T, isEqualTo rhs: T, by keyPaths: [KeyPath<T, V>]) -> Bool {
-    return keyPaths.allSatisfy { keyPath in
-        return lhs[keyPath: keyPath] == rhs[keyPath: keyPath]
-    }
-}
 
 /// Check equality of two values by selectively choosing which properties to compare.
 ///

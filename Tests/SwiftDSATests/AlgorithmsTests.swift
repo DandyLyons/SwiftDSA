@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 import SwiftDSA
 
@@ -36,5 +37,23 @@ struct AlgorithmsTests {
         
         let array2 = array1.shuffled()
         #expect(await array1.hasSameElements(as: array2) == true)
+    }
+    
+    @Test func value_isEqualTo_by() {
+        let array1 = self.array
+        let array1Shuffled = array1.shuffled()
+        #expect(array1 != array1Shuffled)
+        
+        struct Person: Equatable {
+            let firstName: String
+            let lastName: String
+            let age: Int
+            let id: UUID
+        }
+        let person1 = Person(firstName: "Blob", lastName: "McBlob", age: 34, id: UUID())
+        let person2 = Person(firstName: "Blob", lastName: "McBlob", age: 34, id: UUID())
+        #expect(person1 != person2)
+        #expect(person1.id != person2.id)
+        #expect(value(person1, isEqualTo: person2, by: \.firstName, \.lastName, \.age))
     }
 }
